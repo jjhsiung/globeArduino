@@ -129,6 +129,24 @@ void loop()
     }
 }
 
+//i is the current LED within a group we're controlling 
+//(needs to go from 0-7 to control an entire row) 
+//j is the current group we're trying to control
+void printColumn(int col)
+{
+  int val = 0;
+  for(int i = 0; i < 8; i++)
+  {
+    for(int j = 0; j < 8; j++)
+    {
+      val = ((result[col][j] >> i) & 1);
+      if(val == 1)
+        lightControl(j, i);
+    }
+    delayMicroseconds(100);
+  }  
+}
+
 int h2i(String input)
 {
   if(input == "")
@@ -194,7 +212,9 @@ int x2i(char *s)
   }
   return x;
 }
-  
+
+//group is the group number we're going to control
+//value is a number from 0-7 which specifies which LED will light up
 void lightControl(int group, int value)
 { 
   switch (group) {
