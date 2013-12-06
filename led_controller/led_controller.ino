@@ -85,17 +85,8 @@ void setup()
 
 }
 
-byte waitAndRead()
+int serialReadHexDigit(byte c)
 {
-  while(Serial.available() == 0){
-  }
-  
-  return (byte) Serial.read();
-}
-
-int serialReadHexDigit()
-{
-    byte c = waitAndRead();
     if (c >= '0' && c <= '9') {
         return c - '0';
     } else if (c >= 'a' && c <= 'f') {
@@ -109,15 +100,29 @@ int serialReadHexDigit()
 
 void loop()
 {
+  int incoming = 0;
+  while(Serial.available() > 0){
+    incoming = Serial.read();  
+    Serial.print("I recieved: ");
+    Serial.println(incoming);
+  }
+  
+  /*
+  char group[2];
+  group[0] = content[0];
+  group[1] = content[1];
+  int result = (int) strtol(group, NULL, 16);
+  Serial.println(result);
+  */
+  
   //Loop through columns, read the data sent, convert to an int
-    for(int i = 0; i < 200; i++)
+    /*for(int i = 0; i < 200; i++)
     {
       for(int j = 0; j < 8; j++)
       {
         byte first = serialReadHexDigit();
-        Serial.println("first is: " + first);
+        
         byte second = serialReadHexDigit();
-        Serial.println("second is: " + second);
         
         if (first < 0 || second < 0) {
             Serial.print("Invalid hex character sent, check the message at line " + (i * j + j));  // an invalid hex character was encountered
@@ -126,7 +131,7 @@ void loop()
         }
         //Serial.print("result is: " + result[i][j]);
       }
-    }
+    }*/
 }
 
 //i is the current LED within a group we're controlling 
