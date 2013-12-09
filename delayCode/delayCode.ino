@@ -1,9 +1,3 @@
-String content = "";
-char character;
-int result[64][8];
-String delayString = "";
-int delayBetweenColumns = 100;
-
 //group 1
 int ledPin0 = 13;                 // LED connected to digital pin 13
 int ledPin1 = 12;                 // LED connected to digital pin 13
@@ -25,15 +19,15 @@ int ledPin10 = 8;                 // LED connected to digital pin 13
 int ledPin11 = 7;                 // LED connected to digital pin 13
 int ledPinEN4 = 6;  
 //group 5
-int ledPin12 = 48;                 // LED connected to digital pin 13
-int ledPin13 = 49;                 // LED connected to digital pin 13
-int ledPin14 = 50;                 // LED connected to digital pin 13
-int ledPinEN5 = 51;
+int ledPin12 = 18;                 // LED connected to digital pin 13
+int ledPin13 = 19;                 // LED connected to digital pin 13
+int ledPin14 = 20;                 // LED connected to digital pin 13
+int ledPinEN5 = 21;
 //group 6
-int ledPin15 = 18;                 // LED connected to digital pin 13
-int ledPin16 = 19;                 // LED connected to digital pin 13
-int ledPin17 = 20;                 // LED connected to digital pin 13
-int ledPinEN6 = 21;
+int ledPin15 = 48;                 // LED connected to digital pin 13
+int ledPin16 = 49;                 // LED connected to digital pin 13
+int ledPin17 = 50;                 // LED connected to digital pin 13
+int ledPinEN6 = 51;
 //group 7
 int ledPin18 = 22;                 // LED connected to digital pin 13
 int ledPin19 = 23;                 // LED connected to digital pin 13
@@ -45,10 +39,13 @@ int ledPin22 = 27;                 // LED connected to digital pin 13
 int ledPin23 = 28;                 // LED connected to digital pin 13
 int ledPinEN8 = 29;
 
+char character;
+int delayBetweenColumns = 200;
+String delayString;
 
 void setup()
 {
- Serial.begin(9600);
+  Serial.begin(9600);
   while(Serial.available()){
     Serial.read();
   }
@@ -91,27 +88,11 @@ void setup()
   pinMode(ledPin22, OUTPUT);      // sets the digital pin as output
   pinMode(ledPin23, OUTPUT);      // sets the digital pin as output
   pinMode(ledPinEN8, OUTPUT);      // sets the digital pin as output
-
-}
-
-
-int serialReadHexDigit(char c)
-{
-    if (c >= '0' && c <= '9') {
-        return c - '0';
-    } else if (c >= 'a' && c <= 'f') {
-        return c - 'a' + 10;
-    } else if (c >= 'A' && c <= 'F') {
-        return c - 'A' + 10;
-    } else {
-        return -1;   // getting here is bad: it means the character was invalid
-    }
 }
 
 void loop()
 {
-  int counter = 0;
-  if(Serial.available() > 0){
+   if(Serial.available() > 0){
     character = Serial.read();
     if(character == '%'){
       while(Serial.available() <= 0){
@@ -126,43 +107,11 @@ void loop()
         delayString = "";
       }
     }
-    else if(character == '#'){
-      while(Serial.peek() == '#'){
-        Serial.read();
-      }
-      content = "";
-      while(Serial.available() > 0){
-        character = Serial.read();
-        Serial.print(character);
-      }
-      //Serial.println(content);
-      //Loop through columns, read the data sent, convert to an int
-      for(int i = 0; i < 64; i++)
-      {
-        for(int j = 0; j < 8; j++)
-        {
-          //character = Serial.read();
-          //Serial.print(content[counter]);
-          //int first = serialReadHexDigit(content[counter]);
-          //counter++;
-          //character = Serial.read();
-          //Serial.print(content[counter]);
-          //Serial.println("Two Hexes");
-          //int second = serialReadHexDigit(content[counter]);
-          //counter++;
-          /*if (first < 0 || second < 0) {
-          } else {
-              //result[i][j] = (first * 16) + second;
-          }*/
-        }
-      }
-    }
-  }
-  
-  for(int i = 0; i < 64; i++)
+   }
+  for(int a = 0; a < 64; a++)
   {
     unsigned long start = micros();
-    printColumn(i);
+    printColumn(0);
     unsigned long finish = micros();
     unsigned long duration = finish - start;
     delayMicroseconds(delayBetweenColumns - duration);
@@ -172,17 +121,17 @@ void loop()
 //i is the current LED within a group we're controlling 
 //(needs to go from 0-7 to control an entire row) 
 //j is the current group we're trying to control
-void printColumn(int col)
+void printColumn(int val)
 { 
   int holder = 0;
   for(int i = 0; i < 8; i++)
   {
     for(int j = 0; j < 8; j++)
     {
-      if(result[col][j] == 0)
+      if(val == 0)
         lightControl(j+1,0,0);
       else{
-        holder = (result[col][j] >> i) & 1;
+        holder = (val >> i) & 1;
         if(holder == 1)
         {
           lightControl(j+1,7-i,1);
@@ -259,6 +208,6 @@ void lightControl(int group, int value, int allOff)
       // if nothing else matches, do the default
       // default is optional
   }
+
 }
 
-  

@@ -118,7 +118,7 @@ void loop()
   digitalWrite(ledPin21, HIGH);   // sets the LED on
   digitalWrite(ledPin22, HIGH);   // sets the LED on
   digitalWrite(ledPin23, HIGH);   // sets the LED on
-  delay(100);                     // waits for a second
+  delay(3);                     // waits for a second
   digitalWrite(ledPin0, LOW);   // sets the LED on
   digitalWrite(ledPin1, HIGH);   // sets the LED on
   digitalWrite(ledPin2, HIGH);   // sets the LED on
@@ -143,7 +143,7 @@ void loop()
   digitalWrite(ledPin21, LOW);   // sets the LED on
   digitalWrite(ledPin22, HIGH);   // sets the LED on
   digitalWrite(ledPin23, HIGH);   // sets the LED on
-  delay(100);                     // waits for a second
+  delay(3);                     // waits for a second
   digitalWrite(ledPin0, HIGH);   // sets the LED on
   digitalWrite(ledPin1, LOW);   // sets the LED on
   digitalWrite(ledPin2, HIGH);   // sets the LED on
@@ -168,7 +168,7 @@ void loop()
   digitalWrite(ledPin21, HIGH);   // sets the LED on
   digitalWrite(ledPin22, LOW);   // sets the LED on
   digitalWrite(ledPin23, HIGH);   // sets the LED on
-  delay(100);                     // waits for a second
+  delay(3);                     // waits for a second
   digitalWrite(ledPin0, LOW);   // sets the LED on
   digitalWrite(ledPin1, LOW);   // sets the LED on
   digitalWrite(ledPin2, HIGH);   // sets the LED on
@@ -193,7 +193,7 @@ void loop()
   digitalWrite(ledPin21, LOW);   // sets the LED on
   digitalWrite(ledPin22, LOW);   // sets the LED on
   digitalWrite(ledPin23, HIGH);   // sets the LED on
-  delay(100);                     // waits for a second
+  delay(3);                     // waits for a second
   digitalWrite(ledPin0, HIGH);   // sets the LED on
   digitalWrite(ledPin1, HIGH);   // sets the LED on
   digitalWrite(ledPin2, LOW);   // sets the LED on
@@ -220,7 +220,7 @@ void loop()
   digitalWrite(ledPin23, LOW);   // sets the LED on
   
   
-  delay(100);                     // waits for a second
+  delay(3);                     // waits for a second
   digitalWrite(ledPin0, LOW);   // sets the LED on
   digitalWrite(ledPin1, HIGH);   // sets the LED on
   digitalWrite(ledPin2, LOW);   // sets the LED on
@@ -245,7 +245,7 @@ void loop()
   digitalWrite(ledPin21, LOW);   // sets the LED on
   digitalWrite(ledPin22, HIGH);   // sets the LED on
   digitalWrite(ledPin23, LOW);   // sets the LED on
-  delay(100);                     // waits for a second
+  delay(3);                     // waits for a second
   digitalWrite(ledPin0, HIGH);   // sets the LED on
   digitalWrite(ledPin1, LOW);   // sets the LED on
   digitalWrite(ledPin2, LOW);   // sets the LED on
@@ -270,7 +270,7 @@ void loop()
   digitalWrite(ledPin21, HIGH);   // sets the LED on
   digitalWrite(ledPin22, LOW);   // sets the LED on
   digitalWrite(ledPin23, LOW);   // sets the LED on
-  delay(100);                     // waits for a second
+  delay(3);                     // waits for a second
   digitalWrite(ledPin0, LOW);   // sets the LED on
   digitalWrite(ledPin1, LOW);   // sets the LED on
   digitalWrite(ledPin2, LOW);   // sets the LED on
@@ -295,5 +295,5 @@ void loop()
   digitalWrite(ledPin21, LOW);   // sets the LED on
   digitalWrite(ledPin22, LOW);   // sets the LED on
   digitalWrite(ledPin23, LOW);   // sets the LED on
-  delay(100);                     // waits for a second
+  delay(3);                     // waits for a second
 }

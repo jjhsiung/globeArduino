@@ -1,8 +1,10 @@
-String content = "";
+String content[77] = {"0000080000000000","0000080000000000","0000E80000000000","0001F00000000000","0007E00000000000","0007E00000000000","000FF00000000000","0007FE0000000000","0007FFFC00000000","0003FFFF80000000","0001FFFFC0000000","0001FFFFE0000000","0001FFFFF0000000","0000FFFF30000000","0007FFFF30000000","0007FFFF38000000","001BFFFFC8000000","000AF3FFC7C00000","000BF0FE2FE00000","000FF1F82FF00000","0037CFF02FFFFC00","0037D7F00FFFFE00","007DFBE007FFC000","007839E003FF8000","00FC004001FF0000","00FC000000FC0000","007FFC0000F80000","007FFC0000C00000","003FF80000000000","003FF00000000000","007FE00000000000","007FE00078000000","007F88007C000000","001C08CDFC000000","001001CFFC000000","0000007FFC000000","0000067BFC000000","000E1FD3FF000000","000E3FE9FFF80000","000838F9FFFF0000","00003F9DFFFF0000","00003F3DFFFF0000","001037EDFFFE0000","00100FEDFFFC0000","00303FFFFFF00000","0003BFFFFF000000","00043FC7FE1C0000","00003FF2EC300000","0000FFFF60000000","0021FFFFA0000000","0027FFFF80000000","0027FFFF80000000","000FFFDFC0000000","000FFFFFF0000000","000FFFFFF8000000","0007FFFFE0000000","0007FFFFC0000000","0007FFFFC0000000","0027FE7FE0000000","0033FFFFFF000000","0007FFFFF3800000","000FFFFFD8C00000","000FFFFFC3470000","000FFFF7834F8000","000FFFF8934F0000","0007FBF8095F0000","0007E3E2003F0000","000FE38C013F8000","000FC038009FD000","000FFE00009FD000","000FDE0000BFC000","000D800000470000","0008000000800000","0000000000000400","0000000000000C00","0000000000001800","0000000000007000"};
 char character;
-int result[64][8];
+int result[77][8];
+int initialized = 0;
 String delayString = "";
 int delayBetweenColumns = 100;
+unsigned long duration;
 
 //group 1
 int ledPin0 = 13;                 // LED connected to digital pin 13
@@ -25,15 +27,15 @@ int ledPin10 = 8;                 // LED connected to digital pin 13
 int ledPin11 = 7;                 // LED connected to digital pin 13
 int ledPinEN4 = 6;  
 //group 5
-int ledPin12 = 48;                 // LED connected to digital pin 13
-int ledPin13 = 49;                 // LED connected to digital pin 13
-int ledPin14 = 50;                 // LED connected to digital pin 13
-int ledPinEN5 = 51;
+int ledPin12 = 18;                 // LED connected to digital pin 13
+int ledPin13 = 19;                 // LED connected to digital pin 13
+int ledPin14 = 20;                 // LED connected to digital pin 13
+int ledPinEN5 = 21;
 //group 6
-int ledPin15 = 18;                 // LED connected to digital pin 13
-int ledPin16 = 19;                 // LED connected to digital pin 13
-int ledPin17 = 20;                 // LED connected to digital pin 13
-int ledPinEN6 = 21;
+int ledPin15 = 48;                 // LED connected to digital pin 13
+int ledPin16 = 49;                 // LED connected to digital pin 13
+int ledPin17 = 50;                 // LED connected to digital pin 13
+int ledPinEN6 = 51;
 //group 7
 int ledPin18 = 22;                 // LED connected to digital pin 13
 int ledPin19 = 23;                 // LED connected to digital pin 13
@@ -126,45 +128,33 @@ void loop()
         delayString = "";
       }
     }
-    else if(character == '#'){
-      while(Serial.peek() == '#'){
-        Serial.read();
-      }
-      content = "";
-      while(Serial.available() > 0){
-        character = Serial.read();
-        Serial.print(character);
-      }
-      //Serial.println(content);
+  }
+    if(initialized == 0){
       //Loop through columns, read the data sent, convert to an int
-      for(int i = 0; i < 64; i++)
+      for(int i = 0; i < 77; i++)
       {
+        counter = 0;
         for(int j = 0; j < 8; j++)
         {
-          //character = Serial.read();
-          //Serial.print(content[counter]);
-          //int first = serialReadHexDigit(content[counter]);
-          //counter++;
-          //character = Serial.read();
-          //Serial.print(content[counter]);
-          //Serial.println("Two Hexes");
-          //int second = serialReadHexDigit(content[counter]);
-          //counter++;
-          /*if (first < 0 || second < 0) {
+          Serial.print(content[i][counter]);
+          int first = serialReadHexDigit(content[i][counter]);
+          counter++;
+          Serial.print(content[i][counter]);
+          Serial.println("Two Hexes");
+          int second = serialReadHexDigit(content[i][counter]);
+          counter++;
+          if (first < 0 || second < 0) {
           } else {
-              //result[i][j] = (first * 16) + second;
-          }*/
+              result[i][j] = (first * 16) + second;
+          }
         }
       }
-    }
+      initialized = 1;
   }
   
-  for(int i = 0; i < 64; i++)
-  {
-    unsigned long start = micros();
+  for(int i = 0; i < 77; i++)
+  {  
     printColumn(i);
-    unsigned long finish = micros();
-    unsigned long duration = finish - start;
     delayMicroseconds(delayBetweenColumns - duration);
   }
 }
@@ -174,6 +164,7 @@ void loop()
 //j is the current group we're trying to control
 void printColumn(int col)
 { 
+  unsigned long start = micros();
   int holder = 0;
   for(int i = 0; i < 8; i++)
   {
@@ -189,7 +180,10 @@ void printColumn(int col)
         }
       }
     }
-    delayMicroseconds(3);
+    if(i < 6 && i > 2)
+      delayMicroseconds(15);
+     else
+      delayMicroseconds(35);
   }  
   digitalWrite(ledPinEN1, LOW);
   digitalWrite(ledPinEN2, LOW);
@@ -199,6 +193,8 @@ void printColumn(int col)
   digitalWrite(ledPinEN6, LOW);
   digitalWrite(ledPinEN7, LOW);
   digitalWrite(ledPinEN8, LOW);
+  unsigned long finish = micros();
+  duration = finish - start;
 }
 
 //group is the group number we're going to control
