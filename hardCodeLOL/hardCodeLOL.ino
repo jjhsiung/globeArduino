@@ -180,10 +180,7 @@ void printColumn(int col)
         }
       }
     }
-    if(i < 6 && i > 2)
-      delayMicroseconds(15);
-     else
-      delayMicroseconds(35);
+    delayMicroseconds(20);
   }  
   digitalWrite(ledPinEN1, LOW);
   digitalWrite(ledPinEN2, LOW);
